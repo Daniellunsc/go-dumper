@@ -4,4 +4,5 @@ Go-Dumper is a Telegram bot that dumps a database into a file and send it via me
 
 # Configuration
 
-In Main.go code, i've marked some places to replace with your credentials, it's not perfect, but i plan to work with a config file instead.
+You can simple replace the env at [Dockerfile](https://github.com/Daniellunsc/go-dumper/blob/master/Dockerfile)
+Or just fullfill your credentials at [Config File](https://github.com/Daniellunsc/go-dumper/blob/master/config.yml)
