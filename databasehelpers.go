@@ -46,6 +46,7 @@ func setupDatabase(dbInfo DatabaseConfig) *sql.DB {
 	return db
 }
 
+// Validate if dir Exists and If not, create the dir. Returns the string with dir created
 func createDirIfNotExists(dirPath string) string {
 	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
 		os.Mkdir(dirPath, os.ModePerm)
