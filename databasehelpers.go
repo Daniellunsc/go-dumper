@@ -12,7 +12,7 @@ import (
 // setupDatabase try to open a connection to given dbInfo then returns the instance of connection or nil
 func setupDatabase(dbInfo Config) *sql.DB {
 	// nota! sql.Open apenas valida os argumentos, não abre uma conexão.
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbInfo.Database.User, dbInfo.Database.Password, dbInfo.Database.Hostname, dbInfo.Database.Port, dbInfo.Database.Db))
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbInfo.Database.DbUser, dbInfo.Database.Password, dbInfo.Database.Hostname, dbInfo.Database.Port, dbInfo.Database.Db))
 	if err != nil {
 		fmt.Printf("Error on setupDatabase() %s", err)
 		return nil

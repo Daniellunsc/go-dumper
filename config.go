@@ -13,7 +13,7 @@ import (
 // Config represents a default config structure
 type Config struct {
 	Database struct {
-		User     string `yaml:"user" envconfig:"user"`
+		DbUser   string `yaml:"dbuser" envconfig:"dbuser"`
 		Hostname string `yaml:"hostname" envconfig:"hostname"`
 		Password string `yaml:"password" envconfig:"password"`
 		Db       string `yaml:"db" envconfig:"db"`
