@@ -12,8 +12,11 @@ import (
 
 func main() {
 	// TODO: formatar o código e permitir carregar dados pelas variáveis de ambiente
-	// Adicione aqui seu BOT_API_ID
-	bot, err := tgbotapi.NewBotAPI("YOUR_BOT_API_KEY")
+
+	var config Config
+	readConfigFile(&config)
+	readConfigEnv(&config)
+	bot, err := tgbotapi.NewBotAPI(config.Telegram.Botkey)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -33,14 +36,14 @@ func main() {
 
 		if update.Message.IsCommand() {
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
-			var allowedChatID int64 = 0 //CHAT_ID Permitido de usar o bot.
-			if update.Message.Chat.ID == allowedChatID {
+			var allowedChatID int64 = config.Telegram.ChatID
+			if update.Message.Chat.ID != allowedChatID {
 				// NOTA! Não seria melhor organizar cada switch por uma função ou um enum ?
 				switch update.Message.Command() {
 				case "dump":
 					msg.Text = "Um momento, estou tentando realizar o dump."
 					bot.Send(msg)
-					fileName, err := dumpDatabase("your_database_name")
+					fileName, err := dumpDatabase(config)
 					if err != nil {
 						fmt.Println(err)
 						bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, "Ocorreu um erro: "+err.Error()))
@@ -56,6 +59,8 @@ func main() {
 						return
 					}
 					os.Remove("./dumps/" + fileName)
+					msgToSend := tgbotapi.NewMessage(update.Message.Chat.ID, "Dump finalizado")
+					bot.Send(msgToSend)
 
 				case "chat_id":
 					msg.Text = strconv.FormatInt(update.Message.Chat.ID, 10)

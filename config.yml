@@ -1,0 +1,9 @@
+database: 
+    db: database_name
+    hostname: hostname
+    password: password
+    port: 3306
+    user: database_user
+telegram: 
+    botkey: botkey
+    chatid: 0
