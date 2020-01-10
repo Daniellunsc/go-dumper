@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/jamf/go-mysqldump"
@@ -45,11 +46,19 @@ func setupDatabase(dbInfo DatabaseConfig) *sql.DB {
 	return db
 }
 
+func createDirIfNotExists(dirPath string) string {
+	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
+		os.Mkdir(dirPath, os.ModePerm)
+		return dirPath
+	}
+	return dirPath
+}
+
 // dumpDatabase receives a databaseName to dump
 func dumpDatabase(databaseName string) (string, error) {
 	// Configure aqui suas variáveis de ambiente
 	databaseInfo := setupDatabaseInfo("root", "12345678", "localhost", "3306", databaseName)
-	dumpDir := "dumps"
+	dumpDir := createDirIfNotExists("dumps")
 	dumpFileFormat := fmt.Sprintf("%s-2006-01-02 15_04", databaseInfo.databaseName)
 	dumpFileName := time.Now().Format(dumpFileFormat) + ".sql"
 	if db := setupDatabase(databaseInfo); db != nil {
