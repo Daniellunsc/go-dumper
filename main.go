@@ -37,7 +37,7 @@ func main() {
 		if update.Message.IsCommand() {
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 			var allowedChatID int64 = config.Telegram.ChatID
-			if update.Message.Chat.ID != allowedChatID {
+			if update.Message.Chat.ID == allowedChatID {
 				// NOTA! Não seria melhor organizar cada switch por uma função ou um enum ?
 				switch update.Message.Command() {
 				case "dump":
